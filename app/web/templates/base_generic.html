@@ -36,31 +36,40 @@
   <body>
     <header>
   <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-    <a class="navbar-brand" href="#">DriveMonitoring</a>
+    <a class="navbar-brand" href="{% url 'index' %}">DriveMonitoring</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarCollapse">
       <ul class="navbar-nav mr-auto">
+        {% if user.is_authenticated %}
         <li class="nav-item active">
-          <a class="nav-link" href="#">Новости<span class="sr-only">(current)</span></a>
+          <a class="nav-link" href="{% url 'devices' %}">Ваши устройства<span class="sr-only">(current)</span></a>
+        </li>
+        {% endif %}
+        <li class="nav-item active">
+          <a class="nav-link" href="{% url 'install' %}">Установка<span class="sr-only">(current)</span></a>
         </li>
         <li class="nav-item active">
-          <a class="nav-link" href="#">Установка<span class="sr-only">(current)</span></a>
-        </li>
-        <li class="nav-item active">
-          <a class="nav-link" href="#">Поддержка<span class="sr-only">(current)</span></a>
+          <a class="nav-link" href="{% url 'support' %}">Поддержка<span class="sr-only">(current)</span></a>
         </li>
       </ul>
-      {% if user.is_authenticated %}
-        <li class="nav-item active">
-          <a class="nav-link" href="#">Привет {{ user.username }}!<span class="sr-only">(current)</span></a>
-        </li>
-      {% else %}
+      
       <form class="form-inline mt-2 mt-md-0">
-        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Войти</button>
+        {% if user.is_authenticated %}
+
+        <ul class="navbar-nav mr-auto">
+        <li class="nav-item active">
+          <a class="nav-link" href="{% url 'user'  user.id %}">Привет, {{ user.username }}!</a>
+        </li>
+         <li class="nav-item active">
+        <a  class="nav-link" href="{% url 'logout' %}">Выход</a></span>
+        </li>
+        </ul>
+      {% else %}
+        <a class="btn btn-outline-success my-2 my-sm-0" type="submit" href="{% url 'login' %}">Войти</a>
+        {% endif %}
       </form>
-      {% endif %}
     </div>
   </nav>
 </header>

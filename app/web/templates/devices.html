@@ -1,0 +1,36 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+    <h1>Device List</h1>
+
+    {% if devices %}
+    <ul>
+
+      {% for device in devices %}
+      <li>
+      	{{device.serialNumber}}
+        {{device.modelFamily}}
+        {{device.deviceModel}}
+        {{device.userCapacity}}
+        {{device.sectorSizes}}
+        {{device.rotationRate}}
+        {{device.ataVersion}}
+      </li>
+      {% endfor %}
+      {% for atr in smart %}
+      <li>
+        {{atr.Num}}
+        {{atr.Name}}
+        {{atr.Current}}
+        {{atr.Trash}}
+        {{atr.Type}}
+        {{atr.RawValue}}
+      </li>
+      {% endfor %}
+
+
+    </ul>
+    {% else %}
+      <p>There are no devices.</p>
+    {% endif %} 
+{% endblock %}
