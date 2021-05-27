@@ -1,7 +1,6 @@
 import os
-import requests  
 import json
-import time
+import requests
 # класс для хранения всех
 # подробности об устройстве
 class Device():
@@ -129,16 +128,7 @@ class Device():
         self.results = info
 
 
-    def send_info(self):
-
-        file = open("login.txt", "r")
-        auth = file.readline()
-        file.close()
-
-        login = auth.split()[0]
-        password = auth.split()[1]
-
-        print("login:" + login + "\n password:" + password)
+    def send_info(self, login, password):
         
         loginURL = 'http://127.0.0.1:8000/login/'
 
@@ -156,8 +146,6 @@ class Device():
         login_data = dict(username=login, password=password, csrfmiddlewaretoken=csrftoken, next='/')
         r = client.post(loginURL, data=login_data, headers=dict(Referer=loginURL))
         
-        print(client.get('http://127.0.0.1:8000/user/devices/'))   
-        print(r)
 
         postUrl = 'http://127.0.0.1:8000/user/devices/'
         client.get(postUrl)  # sets cookie
@@ -167,11 +155,8 @@ class Device():
         else:
             # older versions
             csrftoken = client.cookies['csrf']
-        print(self.info)
-        print(self.smart_attr)
         device_data = dict(smart = json.dumps(self.smart_attr), info = json.dumps(self.info),csrfmiddlewaretoken=csrftoken, next='/')
         r1 = client.post(postUrl, data=device_data, headers=dict(Referer=postUrl))
-        print(r1)
 
 
 
@@ -181,26 +166,11 @@ class Device():
 if __name__ == '__main__':
 
     device = Device()
-    while True:
-        device.get_device_name() 
-        device.get_device_info()  
-        device.check_device_health()
-        #device.run_short_test()
-        device.get_results()
-        device.get_device_smart_atr()
-        device.get_device_smart_capabilities()
-        device.send_info()
-        #print(device.device_name)
-        #print("\n")
-        #for i in device.info:
-        #    print(i + " : " + device.info[i])
-        #print("\n")
-        #print(device.results)
-        #print("\n")
-        #for i in range(0, len(device.smart_attr)):
-        #    print(device.smart_attr[i])
-        #print("\n")
-        #for i in range(5, len(device.smart_cap)):
-        #    print(device.smart_cap[i])
-        time.sleep(10)
+    device.get_device_name() 
+    device.get_device_info()  
+    device.check_device_health()
+    device.run_short_test()
+    device.get_results()
+    device.get_device_smart_atr()
+    device.get_device_smart_capabilities()
     

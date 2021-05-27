@@ -29,7 +29,6 @@ def user(request, pk_test):
 		devices = user.device_set.all()
 		device_count = devices.count()
 		context = {"device_count": device_count}
-		print(device_count)
 		return render(request,'user.html', context)
 	else:
 		return render(request,'error.html', context)
@@ -49,7 +48,6 @@ def devices(request):
 			device = Device.objects.get(user = user, serialNumber = info.get("Serial Number"))
 			for i in range(0,len(smart_attr)-1):
 				attr = smart_attr[i]
-				print(attr)
 				if Smartctl.objects.filter(device = device, Num = attr.get("Id")):
 					smart = Smartctl.objects.get(device = device, Num = attr.get("Id"))
 					smart.Current = attr.get("Current")

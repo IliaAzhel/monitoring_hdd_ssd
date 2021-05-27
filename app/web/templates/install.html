@@ -1,6 +1,16 @@
 {% extends "base_generic.html" %}
 
 {% block content %}
-<a class="nav-link" href="{% url 'download' %}">Загрузить</a>
-
+<main class="container">
+  	<p></p>
+    <h1>Установка</h1>
+    <p class="lead">После распаковки скачанного архива требуется зайти в папку со скриптами и ввести команды: </p>
+    <div class="bg-light p-5 rounded">
+    	<p class="lead">	pip install -r requirements.txt </p>
+    	<p class="lead">	sudo python3 login.py</p>
+        <p class="lead">    sudo apt-get install smartmontools</p>
+    </div>
+    <p class="lead">При запуске появится окно входа и после авторизации будет запущен скрипт отправляющий информацию о состоянии вашего накопителя на данный веб ресурс. Информацию о состоянии вашего накопителя вы можете проверить на вкладке "Ваши устройства".</p>
+    <a class="btn btn-lg btn-primary" href="{% url 'download' %}" role="button">Загрузить для Linux</a>
+  </main>
 {% endblock %}

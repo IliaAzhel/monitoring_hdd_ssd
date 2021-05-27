@@ -50,9 +50,9 @@ GridLayout {
             font.pointSize: 24
         }
  
-        // Поле ввода первого числа
+
         TextField {
-            id: firstNumber
+            id: login
             Layout.fillWidth: true
         }
  
@@ -64,9 +64,9 @@ GridLayout {
             horizontalAlignment: Text.AlignHCenter
         }
  
-        // Поле ввода второго числа
+
         TextField {
-            id: secondNumber
+            id: password
             Layout.fillWidth: true
             echoMode: TextInput.Password
         }
@@ -78,13 +78,13 @@ GridLayout {
  
  
             onClicked: {
-                // Вызываем слот калькулятора, чтобы сложить числа
-                calculator.sum(firstNumber.text, secondNumber.text)
+
+                authentification.login(login.text, password.text)
             }
         }
 
         Text {
-            id: sumResult
+            id: authResult
             color: "#FFFFFF"
             font.pointSize: 10
             horizontalAlignment: Text.AlignHCenter
@@ -92,12 +92,11 @@ GridLayout {
     }
 
     Connections {
-        target: calculator
+        target: authentification
  
-        // Обработчик сигнала сложения
-        onSumResult: {
-            // sum было задано через arguments=['sum']
-            sumResult.text = sum
+
+        onAuthResult: {
+            authResult.text = auth
         }
  
     }

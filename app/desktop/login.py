@@ -2,22 +2,22 @@ from PyQt5.QtGui import QGuiApplication
 from PyQt5.QtQml import QQmlApplicationEngine
 from PyQt5.QtCore import QObject, pyqtSignal, pyqtSlot
 import requests
+import monitoring
+import time
 
-class Calculator(QObject):
+class Authentification(QObject):
     def __init__(self):
         QObject.__init__(self)
+    login = ""
+    password = "" 
+
+    authResult = pyqtSignal(str, arguments=['auth'])
      
-    # cигнал передающий сумму
-    # обязательно даём название аргументу через arguments=['sum']
-    # иначе нельзя будет его забрать в QML
-    sumResult = pyqtSignal(str, arguments=['sum'])
      
-     
-    # слот для суммирования двух чисел
+
     @pyqtSlot(str, str)
-    def sum(self, arg1, arg2):
-        # складываем два аргумента и испускаем сигнал
-        print("login:" + arg1+ "\n password:" + arg2)
+    def login(self, arg1, arg2):
+
         
         URL = 'http://127.0.0.1:8000/login/'
 
@@ -34,29 +34,46 @@ class Calculator(QObject):
 
         login_data = dict(username=arg1, password=arg2, csrfmiddlewaretoken=csrftoken, next='/')
         r = client.post(URL, data=login_data, headers=dict(Referer=URL))
-        file = open("login.txt", "w")
-        file.write(arg1 + " " + arg2)
-        file.close()
+        Authentification.login = arg1
+        Authentification.password = arg2
  
         if r.request.url == "http://127.0.0.1:8000/login/":
-            self.sumResult.emit("Неправильно введен логин или пароль")
+            self.authResult.emit("Неправильно введен логин или пароль")
         elif r.request.url == "http://127.0.0.1:8000/main/":
-            self.sumResult.emit("Авторизация прошла успешна")
+            self.authResult.emit("Авторизация прошла успешно,\n для продолжения закройте окно авторизации")
+            
+            
      
       
 if __name__ == "__main__":
     import sys
-     
+    
         # создаём экземпляр приложения
     app = QGuiApplication(sys.argv)
         # создаём QML движок
     engine = QQmlApplicationEngine()
         # создаём объект калькулятора
-    calculator = Calculator()
+    authentification = Authentification()
         # и регистрируем его в контексте QML
-    engine.rootContext().setContextProperty("calculator", calculator)
+    engine.rootContext().setContextProperty("authentification", authentification)
         # загружаем файл qml в движок
     engine.load('./UI/main.qml')
      
     engine.quit.connect(app.quit)
-    sys.exit(app.exec_())
+
+    app.exec_()
+
+    device = monitoring.Device()
+    while True:
+        device.get_device_name() 
+        device.get_device_info()  
+        device.check_device_health()
+        device.get_results()
+        device.get_device_smart_atr()
+        device.get_device_smart_capabilities()
+        device.send_info(Authentification.login, Authentification.password)
+        time.sleep(10)
+
+
+
+    
