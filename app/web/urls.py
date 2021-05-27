@@ -6,10 +6,11 @@ from django.views.generic import TemplateView
 
 urlpatterns = [
 	path('main/', views.index, name = 'index'),
-	#path('install/', views.install, name = 'install'),
-	#path('support/', views.index, name = 'support'),
-	#path('users/<int:user_id>', views.user, name = 'user'),
-	#path('users/<int:user_id>/<int:device_id>/', views.device, name = 'device'),
+	path('install/', views.install, name = 'install'),
+	path('install/download', views.downloadZip, name = 'download'),
+	path('support/', views.support, name = 'support'),
+	path('user/<str:pk_test>', views.user, name = 'user'),
+	path('user/devices/', views.devices, name = 'devices'),
 	path('login/', views.loginPage, name = 'login'),
 	path('register/', views.registerPage, name = 'register'),
 	path('logout/', views.logoutUser, name='logout'),

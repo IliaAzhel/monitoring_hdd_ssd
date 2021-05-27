@@ -1,0 +1,52 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+	<p></p>
+    <h1>Список накопителей</h1>
+
+    {% if devices %}
+    
+      {% for device in devices %}
+        <div class="bd-example">
+        <p>Серийный номер устройства: {{device.serialNumber}}</p>
+        <p>Модель устройства: {{device.modelFamily}}</p>
+        <p>Модель устройства: {{device.deviceModel}}</p>
+        <p>Объем памяти: {{device.userCapacity}}</p>
+        <p>Размер сектора: {{device.sectorSizes}}</p>
+        <p>Скорость вращения: {{device.rotationRate}}</p>
+        <p>АТА версия: {{device.ataVersion}}</p>
+        </div>
+      {% endfor %}
+    
+    <div>
+        <div class="bd-example">
+        <table class="table table-striped">
+          <thead>
+          <tr>
+            <th scope="col">Id</th>
+            <th scope="col">Имя атрибута</th>
+            <th scope="col">Текущее значение</th>
+            <th scope="col">Критическое значение</th>
+            <th scope="col">Абсолютное значение значение</th>
+          </tr>
+          </thead>
+          <tbody>
+          {% for atr in smart %}
+          <tr>
+            <td>{{atr.Num}}</td>
+            <td>{{atr.Name}}</td>
+            <td>{{atr.Current}}</td>
+            <td>{{atr.Trash}}</td>
+            <td>{{atr.RawValue}}</td>
+          </tr>
+          {% endfor %}
+          </tbody>
+        </table>
+        </div>
+    </div>
+
+
+    {% else %}
+      <p>Нет отслеживаемых устройств.</p>
+    {% endif %} 
+{% endblock %}
