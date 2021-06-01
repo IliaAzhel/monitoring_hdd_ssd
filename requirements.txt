@@ -14,10 +14,6 @@ PyQt5==5.14.2
 PyQt5-sip==12.7.2
 PyQt5-stubs==5.14.2.2
 requests==2.18.4
-ufw==0.36
-urllib3==1.22
-urlquote==1.1.4
-uuid==1.30
 virtualenv==16.4.3
 whitenoise==5.2.0
 WTForms==2.3.3
