@@ -52,7 +52,7 @@ if __name__ == "__main__":
     app = QGuiApplication(sys.argv)
         # создаём QML движок
     engine = QQmlApplicationEngine()
-        # создаём объект калькулятора
+        # создаём объект 
     authentification = Authentification()
         # и регистрируем его в контексте QML
     engine.rootContext().setContextProperty("authentification", authentification)

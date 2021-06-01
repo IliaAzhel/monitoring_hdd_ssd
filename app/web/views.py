@@ -50,14 +50,12 @@ def devices(request):
 				attr = smart_attr[i]
 				if Smartctl.objects.filter(device = device, Num = attr.get("Id")):
 					smart = Smartctl.objects.get(device = device, Num = attr.get("Id"))
-					smart.Current = attr.get("Current")
-					smart.Type = attr.get("Type")
-					smart.RawValue = attr.get("RawValue")
-					smart.save()
+					
 				else:
-					smart = Smartctl(device = device, Num = attr.get("Id"), Name = attr.get("Name"), Current = attr.get("Current"), Trash = attr.get("Trash"), 
-						Type = attr.get("Type"), RawValue = attr.get("RawValue"))
+					smart = Smartctl(device = device, Num = attr.get("Id"), Name = attr.get("Name"), Trash = attr.get("Trash"))
 					smart.save()
+				attribute = Attribute(smartctl = smart, Current = attr.get("Current"), Type = attr.get("Type"), RawValue = attr.get("RawValue"))
+				attribute.save()	
 
 			return HttpResponse(status=200)
 	else:
@@ -67,7 +65,7 @@ def devices(request):
 		smart_attr = []
 		for device in devices:
 			for attr in device.smartctl_set.all():
-				smart_attr.append(attr)
+				smart_attr.append((attr,attr.attribute_set.all()[0]))
 		context = {"devices": devices, "smart": smart_attr}
 		return render(request,'devices.html', context)
 
