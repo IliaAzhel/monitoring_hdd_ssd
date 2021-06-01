@@ -73,7 +73,7 @@ if __name__ == "__main__":
         device.get_device_smart_atr()
         device.get_device_smart_capabilities()
         device.send_info(Authentification.login, Authentification.password)
-        time.sleep(10)
+        time.sleep(3600)
 
 
 
