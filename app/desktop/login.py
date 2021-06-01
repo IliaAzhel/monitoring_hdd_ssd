@@ -8,6 +8,7 @@ import time
 class Authentification(QObject):
     def __init__(self):
         QObject.__init__(self)
+
     login = ""
     password = "" 
 
@@ -19,7 +20,7 @@ class Authentification(QObject):
     def login(self, arg1, arg2):
 
         
-        URL = 'http://127.0.0.1:8000/login/'
+        URL = 'https://monitoringhddssd.herokuapp.com/login/'
 
         client = requests.session()
 
@@ -31,15 +32,15 @@ class Authentification(QObject):
         else:
             # older versions
             csrftoken = client.cookies['csrf']
-
         login_data = dict(username=arg1, password=arg2, csrfmiddlewaretoken=csrftoken, next='/')
         r = client.post(URL, data=login_data, headers=dict(Referer=URL))
         Authentification.login = arg1
         Authentification.password = arg2
- 
-        if r.request.url == "http://127.0.0.1:8000/login/":
+        time.sleep(1)
+        if r.request.url == "https://monitoringhddssd.herokuapp.com/login/":
+
             self.authResult.emit("Неправильно введен логин или пароль")
-        elif r.request.url == "http://127.0.0.1:8000/main/":
+        elif r.request.url == "https://monitoringhddssd.herokuapp.com/main/":
             self.authResult.emit("Авторизация прошла успешно,\n для продолжения закройте окно авторизации")
             
             

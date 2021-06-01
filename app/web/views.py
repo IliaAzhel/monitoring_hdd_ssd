@@ -119,7 +119,7 @@ def downloadZip(request):
 	response = HttpResponse(content_type='application/zip')
 	new_zip = zipfile.ZipFile(response, 'w')
 
-	for root, dirs, files in os.walk('./desktop'):
+	for root, dirs, files in os.walk('./app/desktop'):
 		for file in files:
 			new_zip.write(os.path.join(root,file))
 

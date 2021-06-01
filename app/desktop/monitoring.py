@@ -130,7 +130,7 @@ class Device():
 
     def send_info(self, login, password):
         
-        loginURL = 'http://127.0.0.1:8000/login/'
+        loginURL = 'https://monitoringhddssd.herokuapp.com/login/'
 
         client = requests.session()
 
@@ -147,7 +147,7 @@ class Device():
         r = client.post(loginURL, data=login_data, headers=dict(Referer=loginURL))
         
 
-        postUrl = 'http://127.0.0.1:8000/user/devices/'
+        postUrl = 'https://monitoringhddssd.herokuapp.com/user/devices/'
         client.get(postUrl)  # sets cookie
         if 'csrftoken' in client.cookies:
             # Django 1.6 and up
@@ -173,4 +173,6 @@ if __name__ == '__main__':
     device.get_results()
     device.get_device_smart_atr()
     device.get_device_smart_capabilities()
-    
+    print(device.info)
+    print(device.smart_attr)
+    device.send_info("Admin","admin")    
