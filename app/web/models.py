@@ -1,7 +1,9 @@
 from django.db import models
 from django.contrib.auth.models import User
+import datetime
 
 class Device(models.Model):
+	
 	user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
 	serialNumber = models.CharField(max_length = 40, help_text = "serialNumber",default = "num")
 	modelFamily = models.CharField(max_length = 50, help_text = "ModelFamily",null = True)
@@ -28,16 +30,25 @@ class Device(models.Model):
 		return '%s (%s)' % (self.id, self.serialNumber)
 
 class Smartctl(models.Model):
-	
+
 	device = models.ForeignKey(Device, on_delete=models.SET_NULL, null=True, blank=True)
 	Num = models.CharField(max_length = 30, help_text= "Id",default= "ID")
 	Name = models.CharField(max_length = 30, help_text= "Name",null = True)
-	Current = models.CharField(max_length = 30, help_text= "Current",null = True)
 	Trash = models.CharField(max_length = 30, help_text= "Trash",null = True)
-	Type = models.CharField(max_length = 30, help_text= "Type",null = True)
-	RawValue = models.CharField(max_length = 30, help_text= "RawValue",null = True)
+
 
 	def __str__(self):
 
 		return '%s (%s)' % (self.id, self.Name)	
 
+class Attribute(models.Model):
+
+	smartctl = models.ForeignKey(Smartctl, on_delete=models.SET_NULL, null=True, blank=True)
+	Date = models.DateField(("Date"), default=datetime.date.today)
+	Current = models.CharField(max_length = 30, help_text= "Current",null = True)
+	Type = models.CharField(max_length = 30, help_text= "Type",null = True)
+	RawValue = models.CharField(max_length = 30, help_text= "RawValue",null = True)
+
+	def __str__(self):
+
+		return '%s (%s)' % (self.id, self.Date)	

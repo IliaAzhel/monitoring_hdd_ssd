@@ -3,7 +3,6 @@
 {% block content %}
 	<p></p>
     <h1>Список накопителей</h1>
-
     {% if devices %}
     
       {% for device in devices %}
@@ -16,8 +15,8 @@
         <p>Скорость вращения: {{device.rotationRate}}</p>
         <p>АТА версия: {{device.ataVersion}}</p>
         </div>
-      {% endfor %}
-    
+      {% if smart %}  
+    <input name="date" type="date" />
     <div>
         <div class="bd-example">
         <table class="table table-striped">
@@ -27,23 +26,30 @@
             <th scope="col">Имя атрибута</th>
             <th scope="col">Текущее значение</th>
             <th scope="col">Критическое значение</th>
-            <th scope="col">Абсолютное значение значение</th>
+            <th scope="col">Абсолютное значение</th>
+            <th scope="col">Дата</th>
           </tr>
           </thead>
           <tbody>
-          {% for atr in smart %}
+          {% for attr,attribute in smart %}
           <tr>
-            <td>{{atr.Num}}</td>
-            <td>{{atr.Name}}</td>
-            <td>{{atr.Current}}</td>
-            <td>{{atr.Trash}}</td>
-            <td>{{atr.RawValue}}</td>
+            <td>{{attr.Num}}</td>
+            <td>{{attr.Name}}</td>
+            <td>{{attribute.Current}}</td>
+            <td>{{attr.Trash}}</td>
+            <td>{{attribute.RawValue}}</td>
+            <td>{{attribute.Date}}</td>
           </tr>
           {% endfor %}
           </tbody>
         </table>
         </div>
+
     </div>
+    {% else %}
+      <p>S.M.A.R.T. не поддерживается</p>
+    {% endif %}
+      {% endfor %}
 
 
     {% else %}
