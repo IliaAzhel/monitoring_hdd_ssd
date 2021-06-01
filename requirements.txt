@@ -21,6 +21,7 @@ requests==2.18.4
 six==1.15.0
 sqlparse==0.4.1
 urllib3==1.22
+urlquote==1.1.4
 virtualenv==16.4.3
 whitenoise==5.2.0
 WTForms==2.3.3
