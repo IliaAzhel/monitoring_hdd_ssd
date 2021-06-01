@@ -120,7 +120,7 @@ def history(request, pk_test):
 	history = Smartctl.objects.get(id = pk_test)
 	for attr in history.attribute_set.all():
 				smart_attr.append((history,attr))
-		context = { "smart": smart_attr}
+	context = { "smart": smart_attr}
 	return render(request,'history.html', context)
 
 def downloadZip(request):
