@@ -1,0 +1,35 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+	<p></p>
+    <h1>История изменений значения атрибута</h1> 
+    <div>
+        <div class="bd-example">
+        <table class="table table-striped">
+          <thead>
+          <tr>
+            <th scope="col">Id</th>
+            <th scope="col">Имя атрибута</th>
+            <th scope="col">Текущее значение</th>
+            <th scope="col">Критическое значение</th>
+            <th scope="col">Абсолютное значение</th>
+            <th scope="col">Дата</th>
+          </tr>
+          </thead>
+          <tbody>
+          {% for attr,attribute in smart %}
+          <tr>
+            <td>{{attr.Num}}</td>
+            <td>{{attr.Name}}</td>
+            <td>{{attribute.Current}}</td>
+            <td>{{attr.Trash}}</td>
+            <td>{{attribute.RawValue}}</td>
+            <td>{{attribute.Date}}</td>
+          </tr>
+          {% endfor %}
+          </tbody>
+        </table>
+        </div>
+
+    </div>
+{% endblock %}

@@ -114,6 +114,15 @@ def logoutUser(request):
 	logout(request)
 	return redirect('login')
 
+@login_required(login_url = 'login')
+def history(request, pk_test):
+	smart_attr = []
+	history = Smartctl.objects.get(id = pk_test)
+	for attr in history.attribute_set.all():
+				smart_attr.append((history,attr))
+		context = { "smart": smart_attr}
+	return render(request,'history.html', context)
+
 def downloadZip(request):
 
 	response = HttpResponse(content_type='application/zip')

@@ -16,7 +16,6 @@
         <p>АТА версия: {{device.ataVersion}}</p>
         </div>
       {% if smart %}  
-    <input name="date" type="date" />
     <div>
         <div class="bd-example">
         <table class="table table-striped">
@@ -34,7 +33,7 @@
           {% for attr,attribute in smart %}
           <tr>
             <td>{{attr.Num}}</td>
-            <td>{{attr.Name}}</td>
+            <td><a class="nav-link" href="{% url 'history' attr.id%}">{{attr.Name}}</a></td>
             <td>{{attribute.Current}}</td>
             <td>{{attr.Trash}}</td>
             <td>{{attribute.RawValue}}</td>
